@@ -13,7 +13,7 @@ datasource db {
 model Events {
   id String @id @default(uuid())
   name String
-  finishTime DateTime
+  finishTime String
   pin String @unique
   ip String
   createdAt DateTime @default(now())
