@@ -28,6 +28,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/index.ts"
+    "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/index.ts",
+    "start": "ts-node dist/index.js"
   }
 }
