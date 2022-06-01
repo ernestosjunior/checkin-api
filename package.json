@@ -23,7 +23,8 @@
     "@prisma/client": "3.14.0",
     "cors": "^2.8.5",
     "dotenv": "^14.2.0",
-    "express": "^4.17.2"
+    "express": "^4.17.2",
+    "secure-pin": "^1.0.14"
   },
   "scripts": {
     "build": "tsc",
