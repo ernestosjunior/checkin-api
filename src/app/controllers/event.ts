@@ -34,7 +34,7 @@ export const newEvent = async (req: Request, res: Response) => {
 }
 
 export const getMembersOfEvent = async (req: Request, res: Response) => {
-  const { eventPin } = req.body
+  const { eventPin } = req.params
 
   const event = await prisma.events.findUnique({
     where: {

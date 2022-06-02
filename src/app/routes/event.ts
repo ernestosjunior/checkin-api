@@ -4,6 +4,6 @@ import { newEvent, getMembersOfEvent } from "../controllers"
 const eventRoutes = Router()
 
 eventRoutes.post("/", newEvent)
-eventRoutes.get("/list", getMembersOfEvent)
+eventRoutes.get("/list/:eventPin", getMembersOfEvent)
 
 export default eventRoutes
