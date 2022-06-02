@@ -15,7 +15,10 @@ export const checkin = async (req: Request, res: Response) => {
 
   if (!event) return returnError(res, 404, "Evento não encontrado.")
 
-  const timeWasFinished = new Date() >= new Date(event.finishTime)
+  const currentDate = new Date()
+  const expirationDate = new Date(event.finishTime)
+
+  const timeWasFinished = +currentDate >= +expirationDate
 
   if (timeWasFinished)
     return returnError(res, 404, "O tempo para registrar presença encerrou.")
