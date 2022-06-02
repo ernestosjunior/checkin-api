@@ -7,7 +7,13 @@ type Port = number | string
 export default function server(app: Express): void {
   const port: Port = process.env.PORT || 3000
 
-  app.use(cors())
+  const options = {
+    origin: "*",
+    credentials: true, //access-control-allow-credentials:true
+    optionSuccessStatus: 200,
+  }
+
+  app.use(cors(options))
   app.use(json())
   app.use(routes)
   app.listen(port, () => console.log(`🚀 Server is running on PORT ${port}`))
