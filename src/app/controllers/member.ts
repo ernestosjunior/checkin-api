@@ -1,6 +1,7 @@
 import { Request, Response } from "express"
 import { PrismaClient } from "@prisma/client"
 import { returnError } from "../utils"
+import { zonedTimeToUtc } from "date-fns-tz"
 
 const prisma = new PrismaClient()
 
@@ -15,10 +16,9 @@ export const checkin = async (req: Request, res: Response) => {
 
   if (!event) return returnError(res, 404, "Evento não encontrado.")
 
-  const currentDate = new Date()
-  const expirationDate = new Date(event.finishTime)
+  const utcDate = zonedTimeToUtc(event.finishTime, "America/Sao_Paulo")
 
-  const timeWasFinished = +currentDate >= +expirationDate
+  const timeWasFinished = new Date() >= new Date(utcDate)
 
   if (timeWasFinished)
     return returnError(res, 404, "O tempo para registrar presença encerrou.")
