@@ -33,6 +33,20 @@ export const newEvent = async (req: Request, res: Response) => {
   return res.status(200).json({ success: true, data: event })
 }
 
+export const validatePin = async (req: Request, res: Response) => {
+  const { eventPin } = req.body
+
+  const event = await prisma.events.findUnique({
+    where: {
+      pin: eventPin,
+    },
+  })
+
+  if (!event) return returnError(res, 404, "Evento não encontrado.")
+
+  return res.status(200).json({ success: true, data: null })
+}
+
 export const getMembersOfEvent = async (req: Request, res: Response) => {
   const { eventPin } = req.params
 
