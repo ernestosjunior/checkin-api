@@ -2,6 +2,7 @@ import { Request, Response } from "express"
 import { PrismaClient } from "@prisma/client"
 import * as securePin from "secure-pin"
 import { returnError } from "../utils"
+import * as bcrypt from "bcrypt"
 
 const prisma = new PrismaClient()
 
@@ -10,11 +11,12 @@ const generatePin = () => {
 }
 
 export const newEvent = async (req: Request, res: Response) => {
-  const { name, finishTime, ip } = req.body
+  const { name, finishTime, ip, password } = req.body
 
   const requiredFields = {
     "Nome do evento": name,
     "Termino do evento": finishTime,
+    Senha: password,
   }
 
   const errors = Object.entries(requiredFields)
@@ -25,9 +27,10 @@ export const newEvent = async (req: Request, res: Response) => {
     return returnError(res, 404, `Informe os campos obrigatórios. ${errors}`)
 
   const pin = generatePin()
+  const hash = await bcrypt.hash(password, 10)
 
   const event = await prisma.events.create({
-    data: { name, finishTime, pin, ip },
+    data: { name, finishTime, pin, ip, password: hash },
   })
 
   return res.status(200).json({ success: true, data: event })
